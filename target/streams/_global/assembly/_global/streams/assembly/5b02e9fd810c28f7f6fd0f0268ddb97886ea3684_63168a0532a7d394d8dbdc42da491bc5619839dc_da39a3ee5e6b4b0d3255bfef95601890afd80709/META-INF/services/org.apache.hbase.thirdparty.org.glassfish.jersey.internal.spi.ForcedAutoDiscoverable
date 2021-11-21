@@ -1,0 +1,3 @@
+org.apache.hbase.thirdparty.org.glassfish.jersey.server.wadl.internal.WadlAutoDiscoverable
+org.apache.hbase.thirdparty.org.glassfish.jersey.server.internal.monitoring.MonitoringAutodiscoverable
+org.apache.hbase.thirdparty.org.glassfish.jersey.jaxb.internal.JaxbAutoDiscoverable

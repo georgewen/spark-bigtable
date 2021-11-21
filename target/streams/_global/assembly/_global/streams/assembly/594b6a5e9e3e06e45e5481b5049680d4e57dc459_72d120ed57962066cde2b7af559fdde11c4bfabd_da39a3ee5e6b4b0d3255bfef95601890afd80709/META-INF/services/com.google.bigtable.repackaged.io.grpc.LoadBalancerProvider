@@ -1,0 +1,3 @@
+com.google.bigtable.repackaged.io.grpc.grpclb.GrpclbLoadBalancerProvider
+com.google.bigtable.repackaged.io.grpc.internal.PickFirstLoadBalancerProvider
+com.google.bigtable.repackaged.io.grpc.util.SecretRoundRobinLoadBalancerProvider$Provider

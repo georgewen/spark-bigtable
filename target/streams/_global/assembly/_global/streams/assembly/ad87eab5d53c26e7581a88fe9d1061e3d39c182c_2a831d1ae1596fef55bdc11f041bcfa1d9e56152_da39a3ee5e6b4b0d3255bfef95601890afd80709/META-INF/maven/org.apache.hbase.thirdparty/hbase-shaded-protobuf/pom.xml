@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <!--
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.apache.hbase.thirdparty</groupId>
+    <artifactId>hbase-thirdparty</artifactId>
+    <version>3.5.1</version>
+    <relativePath>..</relativePath>
+  </parent>
+  <artifactId>hbase-shaded-protobuf</artifactId>
+  <name>Apache HBase Patched and Relocated (Shaded) Protobuf</name>
+  <description>
+    Pulls down protobuf, patches it, compiles, and then relocates/shades.
+  </description>
+  <build>
+    <plugins>
+      <plugin>
+        <!--Clean needs to purge src/main/java since this is where
+             the unpack of protobuf is overlaid. Do it for usual
+             clean goal but also before we unpack in case patches
+             delete/add files. We use src/main/java instead of dir
+             under 'target' because the jar plugin is dumb, hard to
+             make it source from other then src/main/java.-->
+        <artifactId>maven-clean-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>pre-generate-sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${basedir}/src/main/java</directory>
+              <includes>
+                <include>**/**</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
+        <!--Download our dependency src, i.e. protobuf, and
+             unpack it. Overlays src/main/java so ready for
+            compile-time (the jar plugin expects src in
+            src/main/java)-->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <id>unpack</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>com.google.protobuf</groupId>
+                  <artifactId>protobuf-java</artifactId>
+                  <version>${protobuf.version}</version>
+                  <classifier>sources</classifier>
+                  <type>jar</type>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${basedir}/src/main/java</outputDirectory>
+                  <includes>**/**</includes>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <!--Apply our patches to the unpacked protobuf src-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-patch-plugin</artifactId>
+        <version>1.2</version>
+        <configuration>
+          <targetDirectory>${basedir}</targetDirectory>
+          <skipApplication>false</skipApplication>
+        </configuration>
+        <executions>
+          <execution>
+            <id>patch</id>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>apply</goal>
+            </goals>
+            <configuration>
+              <strip>1</strip>
+              <patchDirectory>${basedir}/src/main/patches</patchDirectory>
+              <patchTrackingFile>${project.build.directory}/patches-applied.txt</patchTrackingFile>
+              <naturalOrderProcessing>true</naturalOrderProcessing>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!--Above we built a jar. Now at package step, do relocation/shade-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <shadeSourcesContent>true</shadeSourcesContent>
+              <createSourcesJar>true</createSourcesJar>
+              <relocations>
+                <relocation>
+                  <pattern>com.google.protobuf</pattern>
+                  <shadedPattern>${rename.offset}.com.google.protobuf</shadedPattern>
+                </relocation>
+                <!-- Our protos depend on the protos at this location.
+                     TODO: We should move off depending on them and then
+                     put this filter into place. See HBASE-22137.
+                <relocation>
+                  <pattern>google.protobuf</pattern>
+                  <shadedPattern>${rename.offset}.google.protobuf</shadedPattern>
+                  <excludes>
+                    <exclude>com.google.errorprone.annotations.CanIgnoreReturnValue</exclude>
+                  </excludes>
+                </relocation>
+                -->
+              </relocations>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>${protobuf.version}</version>
+    </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,2 @@
+com.google.bigtable.repackaged.io.grpc.grpclb.SecretGrpclbNameResolverProvider$Provider
+com.google.bigtable.repackaged.io.grpc.internal.DnsNameResolverProvider

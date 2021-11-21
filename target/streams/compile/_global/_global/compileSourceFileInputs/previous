@@ -1,0 +1,1 @@
+["sbt.Task[scala.collection.immutable.Map[java.lang.String, scala.collection.Seq[scala.Tuple2[java.nio.file.Path, sbt.nio.FileStamp]]]]",{"2.11.12":{"hashes":[["/home/george/scala/java-docs-samples/bigtable/spark/src/main/scala/example/CopyTable.scala","cda7cecffc022f668d02d9ca1994163b1690a72b"]],"lastModifiedTimes":[]}}]

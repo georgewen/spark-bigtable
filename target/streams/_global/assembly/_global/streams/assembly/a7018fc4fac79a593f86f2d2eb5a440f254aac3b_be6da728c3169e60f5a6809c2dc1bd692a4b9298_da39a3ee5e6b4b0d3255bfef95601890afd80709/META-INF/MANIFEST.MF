@@ -1,0 +1,53 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1615041143612
+Bundle-Description: Scalactic is an open-source library for Scala proj
+ ects.
+Bundle-DocURL: http://www.scalactic.org/
+Bundle-ManifestVersion: 2
+Bundle-Name: Scalactic
+Bundle-SymbolicName: org.scalactic
+Bundle-Vendor: Artima, Inc.
+Bundle-Version: 3.2.6
+Created-By: 1.8.0_282 (GraalVM Community)
+Export-Package: org.scalactic;uses:="org.scalactic.anyvals,org.scalact
+ ic.source,scala,scala.collection,scala.collection.generic,scala.colle
+ ction.immutable,scala.collection.mutable,scala.collection.parallel,sc
+ ala.collection.parallel.immutable,scala.concurrent,scala.math,scala.r
+ eflect,scala.reflect.api,scala.reflect.internal,scala.reflect.macros.
+ whitebox,scala.runtime,scala.util";version="3.2.6",org.scalactic.anyv
+ als;uses:="org.scalactic,scala,scala.collection,scala.collection.gene
+ ric,scala.collection.immutable,scala.collection.mutable,scala.math,sc
+ ala.reflect,scala.reflect.api,scala.reflect.macros.whitebox,scala.run
+ time,scala.util,scala.util.matching";version="3.2.6",org.scalactic.ex
+ ceptions;uses:="scala,scala.collection,scala.reflect,scala.runtime";v
+ ersion="3.2.6",org.scalactic.source;uses:="scala,scala.collection,sca
+ la.collection.immutable,scala.reflect,scala.reflect.api,scala.reflect
+ .macros.whitebox,scala.runtime,scala.util";version="3.2.6"
+Implementation-Title: scalactic
+Implementation-Vendor: org.scalactic
+Implementation-Vendor-Id: org.scalactic
+Implementation-Version: 3.2.6
+Import-Package: org.scalactic,org.scalactic.anyvals,org.scalactic.exce
+ ptions,org.scalactic.source,scala;version="[2.11,2.12)",scala.collect
+ ion;version="[2.11,2.12)",scala.collection.convert;version="[2.11,2.1
+ 2)",scala.collection.generic;version="[2.11,2.12)",scala.collection.i
+ mmutable;version="[2.11,2.12)",scala.collection.mutable;version="[2.1
+ 1,2.12)",scala.collection.parallel;version="[2.11,2.12)",scala.collec
+ tion.parallel.immutable;version="[2.11,2.12)",scala.compat;version="[
+ 2.11,2.12)",scala.concurrent;version="[2.11,2.12)",scala.math;version
+ ="[2.11,2.12)",scala.reflect;version="[2.11,2.12)",scala.reflect.api;
+ version="[2.11,2.12)",scala.reflect.internal;version="[2.11,2.12)",sc
+ ala.reflect.internal.util;version="[2.11,2.12)",scala.reflect.io;vers
+ ion="[2.11,2.12)",scala.reflect.macros;version="[2.11,2.12)",scala.re
+ flect.macros.contexts;version="[2.11,2.12)",scala.reflect.macros.whit
+ ebox;version="[2.11,2.12)",scala.runtime;version="[2.11,2.12)",scala.
+ tools.nsc.typechecker;version="[2.11,2.12)",scala.util;version="[2.11
+ ,2.12)",scala.util.control;version="[2.11,2.12)",scala.util.matching;
+ version="[2.11,2.12)"
+Private-Package: org.scalactic.*
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Specification-Title: scalactic
+Specification-Vendor: org.scalactic
+Specification-Version: 3.2.6
+Tool: Bnd-5.1.2.202007211702
+

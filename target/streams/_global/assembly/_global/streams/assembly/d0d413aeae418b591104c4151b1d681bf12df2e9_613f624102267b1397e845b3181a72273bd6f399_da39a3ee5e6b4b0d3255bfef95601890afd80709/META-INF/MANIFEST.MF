@@ -1,0 +1,61 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: 1.7.0_09 (Oracle Corporation)
+Built-By: kichung
+Build-Jdk: 1.7.0_09
+Extension-Name: javax.servlet.jsp
+Implementation-Vendor: Oracle Corporation
+Implementation-Version: 2.3.2
+Specification-Vendor: Oracle Corporation
+Specification-Version: 2.3
+Export-Package: org.apache.jasper;uses:="org.apache.jasper.runtime,org
+ .apache.jasper.compiler,org.apache.jasper.xmlparser,javax.servlet,jav
+ ax.servlet.jsp.tagext,org.apache.jasper.servlet";version="2.3.2",org.
+ apache.jasper.runtime;uses:="javax.el,org.apache.jasper.compiler,java
+ x.servlet.jsp,org.apache.jasper.xmlparser,javax.servlet,org.apache.ja
+ sper,javax.servlet.descriptor,org.apache.jasper.security,javax.servle
+ t.jsp.el,javax.servlet.jsp.tagext,org.glassfish.jsp.api,javax.servlet
+ .http";version="2.3.2",org.apache.jasper.compiler;uses:="org.apache.j
+ asper.runtime,org.xml.sax,org.apache.jasper.xmlparser,javax.servlet,o
+ rg.apache.jasper,org.xml.sax.ext,org.apache.jasper.compiler.tagplugin
+ ,javax.servlet.jsp.tagext,javax.el,javax.tools,javax.xml.parsers,java
+ x.servlet.jsp,org.apache.jasper.security,javax.servlet.descriptor,org
+ .apache.jasper.servlet,org.xml.sax.helpers";version="2.3.2",org.apach
+ e.jasper.security;uses:="org.apache.jasper";version="2.3.2",org.apach
+ e.jasper.resources;version="2.3.2",org.apache.jasper.compiler.tagplug
+ in;version="2.3.2",org.apache.jasper.tagplugins.jstl;uses:="org.apach
+ e.jasper.compiler.tagplugin";version="2.3.2",org.glassfish.jsp.api;us
+ es:="javax.servlet.jsp.tagext";version="2.3.2",org.apache.jasper.serv
+ let;uses:="org.apache.jasper.compiler,org.apache.jasper.runtime,org.a
+ pache.jasper.xmlparser,javax.servlet,org.apache.jasper,org.apache.jas
+ per.security,javax.servlet.descriptor,javax.servlet.jsp.tagext,org.gl
+ assfish.jsp.api,javax.servlet.http";version="2.3.2",org.apache.jasper
+ .xmlparser;uses:="org.apache.jasper.compiler,javax.xml.parsers,javax.
+ xml.transform.dom,org.w3c.dom,org.xml.sax,org.apache.jasper,org.w3c.d
+ om.ls,javax.xml.transform,javax.xml.transform.stream,javax.xml.valida
+ tion";version="2.3.2"
+Tool: Bnd-0.0.255
+Bundle-Name: JSP implementation
+Bundle-Vendor: GlassFish Community
+Bundle-Version: 2.3.2
+Bnd-LastModified: 1367875319561
+Bundle-ManifestVersion: 2
+Bundle-License: http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html
+Bundle-Description: Java.net - The Source for Java Technology Collabor
+ ation
+Import-Package: javax.el;version="3.0",javax.servlet,javax.servlet.des
+ criptor,javax.servlet.http,javax.servlet.jsp;version="2.3",javax.serv
+ let.jsp.el;version="2.3",javax.servlet.jsp.tagext;version="2.3",javax
+ .tools,javax.xml.parsers,javax.xml.transform,javax.xml.transform.dom,
+ javax.xml.transform.stream,javax.xml.validation,org.apache.jasper;ver
+ sion="2.3.2",org.apache.jasper.compiler;version="2.3.2",org.apache.ja
+ sper.compiler.tagplugin;version="2.3.2",org.apache.jasper.resources;v
+ ersion="2.3.2",org.apache.jasper.runtime;version="2.3.2",org.apache.j
+ asper.security;version="2.3.2",org.apache.jasper.servlet;version="2.3
+ .2",org.apache.jasper.tagplugins.jstl;version="2.3.2",org.apache.jasp
+ er.xmlparser;version="2.3.2",org.glassfish.jsp.api;version="2.3.2",or
+ g.w3c.dom,org.w3c.dom.ls,org.xml.sax,org.xml.sax.ext,org.xml.sax.help
+ ers
+Bundle-SymbolicName: org.glassfish.web.javax.servlet.jsp
+Bundle-DocURL: http://glassfish.org
+

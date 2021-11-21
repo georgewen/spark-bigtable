@@ -1,0 +1,3 @@
+org.apache.hbase.thirdparty.org.glassfish.jersey.logging.LoggingFeatureAutoDiscoverable
+org.apache.hbase.thirdparty.org.glassfish.jersey.internal.config.ExternalPropertiesAutoDiscoverable
+org.apache.hbase.thirdparty.org.glassfish.jersey.server.filter.internal.ServerFiltersAutoDiscoverable
