@@ -1,2 +1,2 @@
 [0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
-[0m[[0m[0mdebug[0m] [0m[0m	(/home/george/scala/java-docs-samples/bigtable/spark/src/test/resources/log4j.properties,/home/george/scala/java-docs-samples/bigtable/spark/target/scala-2.11/test-classes/log4j.properties)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/home/george/scala/spark-bigtable-encrypt/src/test/resources/log4j.properties,/home/george/scala/spark-bigtable-encrypt/target/scala-2.11/test-classes/log4j.properties)[0m

@@ -14,52 +14,61 @@
  * limitations under the License.
  */
 
-name := "bigtable-spark-samples"
+lazy val commonSettings = Seq(
+ organization := "slalom",
+ name := "spark-bigtable-encryption",
+ version := "0.1",
+ scalaVersion := "2.11.12",
+)
 
-version := "0.1"
+lazy val shaded = (project in file("."))
+ .settings(commonSettings)
+
+ mainClass in (Compile, packageBin) := Some("example.CopyTable")
 
 // Versions to match Dataproc 1.4
 // https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-release-1.4
-scalaVersion := "2.11.12"
+
+//scalaVersion := "2.11.12"
 val sparkVersion = "2.4.8"
 val bigtableVersion = "1.25.1"
 val hbaseVersion = "2.4.8"
 
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-sql" % sparkVersion % Provided,
+  "org.apache.spark" %% "spark-sql" % sparkVersion % Provided exclude("com.google.protobuf","protobuf-java"), 
   "org.apache.hbase.connectors.spark" % "hbase-spark" % "1.0.0" % Provided,
-  "com.google.cloud.bigtable" % "bigtable-hbase-2.x-hadoop" % bigtableVersion
-)
-
-val scalatestVersion = "3.2.6"
-
-libraryDependencies += "org.scalactic" %% "scalactic" % scalatestVersion
-libraryDependencies += "org.scalatest" %% "scalatest" % scalatestVersion % "test"
-test in assembly := {}
-
-val fixes = Seq(
-  // Required by 'value org.apache.hadoop.hbase.spark.HBaseContext.dstream'
-  "org.apache.spark" %% "spark-streaming" % sparkVersion % Provided,
-  // hbase-server is needed because HBaseContext references org/apache/hadoop/hbase/fs/HFileSystem
-  // hbase-client is declared to override the version of hbase-client declared by bigtable-hbase-2.x-hadoop
+  "com.google.cloud.bigtable" % "bigtable-hbase-2.x-hadoop" % bigtableVersion,
+  "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.0",
+  "com.google.crypto.tink" % "tink" % "1.6.1",
+  "com.google.crypto.tink" % "tink-gcpkms" % "1.6.1",
+  "org.apache.spark" %% "spark-streaming" % sparkVersion % Provided exclude("com.google.protobuf","protobuf-java"),
   "org.apache.hbase" % "hbase-server" % hbaseVersion,
   "org.apache.hbase" % "hbase-client" % hbaseVersion
+  //,"com.google.cloud" % "google-cloud-kms" % "1.39.0" // excludeAll(ExclusionRule(organization = "io.grpc"), ExclusionRule(organization = "commons-logging")) exclude("io.opencensus","opencensus") exclude("com.google.guava","guava") exclude("io.opencensus","opencensus-api") exclude("io.opencensus","opencensus-contrib-http-util")
+ // "com.google.api-client" % "google-api-client-jackson2" % "1.32.2"
 )
-libraryDependencies ++= fixes
 
-// Fix for Exception: Incompatible Jackson 2.9.2
-// Version conflict between HBase and Spark
-// Forcing the version to match Spark
+
+// val scalatestVersion = "3.2.6"
+
+// libraryDependencies += "org.scalactic" %% "scalactic" % scalatestVersion
+// libraryDependencies += "org.scalatest" %% "scalatest" % scalatestVersion % "test"
+// test in assembly := {}
+
+
+// // Fix for Exception: Incompatible Jackson 2.9.2
+// // Version conflict between HBase and Spark
+// // Forcing the version to match Spark
 dependencyOverrides += "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.12.1"
 
-// Excluding duplicates for the uber-jar
-// There are other deps to provide necessary packages
-excludeDependencies ++= Seq(
-  ExclusionRule(organization = "asm", "asm"),
-  ExclusionRule(organization = "commons-beanutils", "commons-beanutils"),
-  ExclusionRule(organization = "commons-beanutils", "commons-beanutils-core"),
-  ExclusionRule(organization = "org.mortbay.jetty", "servlet-api")
-)
+// // Excluding duplicates for the uber-jar
+// // There are other deps to provide necessary packages
+// excludeDependencies ++= Seq(
+//   ExclusionRule(organization = "asm", "asm"),
+//   ExclusionRule(organization = "commons-beanutils", "commons-beanutils"),
+//   ExclusionRule(organization = "commons-beanutils", "commons-beanutils-core"),
+//   ExclusionRule(organization = "org.mortbay.jetty", "servlet-api")
+// )
 
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", "io.netty.versions.properties") => MergeStrategy.first
@@ -73,3 +82,9 @@ assemblyMergeStrategy in assembly := {
     oldStrategy(x)
     MergeStrategy.first
 }
+
+assemblyShadeRules in assembly := Seq(
+  ShadeRule.rename("com.google.common.**" -> "repackaged.com.google.common.@1").inAll,
+  ShadeRule.rename("com.google.protobuf.**" -> "repackaged.com.google.protobuf.@1").inAll
+ /// ShadeRule.rename("com.google.api-client.**" -> "repackaged.com.google.api-client.@1").inAll
+) 
